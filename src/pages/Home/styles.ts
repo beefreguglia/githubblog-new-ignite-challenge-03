@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
 
 export const HomeContainer = styled.main`
   width: 100%;
@@ -37,28 +36,6 @@ export const InformationContainer = styled.div`
   p {
     color: ${({ theme }) => theme['blue-300']};
     margin-bottom: 1.5rem;
-  }
-`
-
-export const StyledLink = styled(Link)`
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  color: ${({ theme }) => theme['blue-500']};
-  text-decoration: none;
-  gap: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid transparent;
-  transition: 300ms;
-
-  svg {
-    margin-bottom: 0.2rem;
-  }
-
-  &:hover {
-    text-transform: none;
-    border-bottom: 1px solid ${({ theme }) => theme['blue-500']};
   }
 `
 
