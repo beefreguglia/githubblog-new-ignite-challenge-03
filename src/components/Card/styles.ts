@@ -19,7 +19,7 @@ export const CardContainer = styled.div`
 
 export const TitleContainer = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1.25rem;
@@ -34,5 +34,9 @@ export const TitleContainer = styled.div`
   p {
     font-size: 0.875rem;
     color: ${({ theme }) => theme['blue-450']};
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
   }
 `

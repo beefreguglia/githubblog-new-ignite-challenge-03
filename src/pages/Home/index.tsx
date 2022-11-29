@@ -36,9 +36,29 @@ interface UserData {
   login: string
 }
 
-// interface CardInformation {
-//   count: number
-// }
+interface CardData {
+  title: string
+  id: number
+  description: string
+  createdAt: Date
+}
+
+interface PostsData {
+  count: number
+  cards: CardData[]
+}
+
+interface GithubItems {
+  title: string
+  id: number
+  created_at: string
+  body: string
+}
+
+interface GithubResponse {
+  total_count: number
+  items: GithubItems[]
+}
 
 const searchFormSchema = z.object({
   query: z.string(),
@@ -48,6 +68,7 @@ type SearchFormInputs = z.infer<typeof searchFormSchema>
 
 export function Home() {
   const [userData, setUserData] = useState({} as UserData)
+  const [postsData, setPostsData] = useState<PostsData>({} as PostsData)
 
   async function getGithubUserData() {
     const response = await githubApi.get<UserData>('/users/beefreguglia')
@@ -63,23 +84,47 @@ export function Home() {
   const { register, watch } = searchForm
   const queryValue = watch('query')
 
-  async function handleGetGithubIssue(query: string) {
-    const response = await githubApi('/search/issues', {
-      params: {
+  async function handleGetGithubIssue(query?: string) {
+    let params = {
+      q: 'repo:beefreguglia/githubblog-new-ignite-challenge-03',
+    }
+    if (query) {
+      params = {
         q: `${query} repo:beefreguglia/githubblog-new-ignite-challenge-03`,
-      },
+      }
+    }
+    const { data } = await githubApi<GithubResponse>('/search/issues', {
+      params,
     })
-    console.log(response.data.items)
+    const { items, total_count: totalCount } = data
+
+    const cardAux = items.map((item) => {
+      return {
+        title: item.title,
+        id: item.id,
+        description: item.body,
+        createdAt: new Date(item.created_at),
+      }
+    })
+
+    const formattedResult: PostsData = {
+      count: totalCount,
+      cards: cardAux,
+    }
+    setPostsData(formattedResult)
   }
 
   useEffect(() => {
     getGithubUserData()
+    handleGetGithubIssue()
   }, [])
 
   useEffect(() => {
-    console.log(queryValue)
     if (queryValue) {
-      handleGetGithubIssue(queryValue)
+      const delayWhenTyping = setTimeout(() => {
+        handleGetGithubIssue(queryValue)
+      }, 1000)
+      return () => clearTimeout(delayWhenTyping)
     }
   }, [queryValue])
 
@@ -116,7 +161,11 @@ export function Home() {
       </HomePrincipalCard>
       <TitleContainer>
         <h2>Publicações</h2>
-        <p>0 publicações</p>
+        {postsData && postsData.count !== 1 ? (
+          <p>{postsData.count} publicação</p>
+        ) : (
+          <p>{postsData.count} publicações</p>
+        )}
       </TitleContainer>
       <SearchForm>
         <FormProvider {...searchForm}>
@@ -129,12 +178,17 @@ export function Home() {
         </FormProvider>
       </SearchForm>
       <HomeCardsContainer>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        {postsData?.cards &&
+          postsData.cards.map((card) => {
+            return (
+              <Card
+                key={card.id}
+                date={card.createdAt}
+                description={card.description}
+                title={card.title}
+              />
+            )
+          })}
       </HomeCardsContainer>
     </HomeContainer>
   )
