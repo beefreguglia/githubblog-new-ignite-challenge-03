@@ -12,10 +12,6 @@ export const StyledLink = styled.a`
   border-bottom: 1px solid transparent;
   transition: 300ms;
 
-  svg {
-    margin-bottom: 0.2rem;
-  }
-
   &:hover {
     text-transform: none;
     border-bottom: 1px solid ${({ theme }) => theme['blue-500']};
