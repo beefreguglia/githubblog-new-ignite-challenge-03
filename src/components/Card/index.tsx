@@ -1,7 +1,8 @@
-import { CardContainer, TitleContainer } from './styles'
+import { CardContainer, TitleContainer, DescriptionContainer } from './styles'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { useNavigate } from 'react-router-dom'
+import ReactMarkdown from 'react-markdown'
 
 interface CardProps {
   description: string
@@ -24,7 +25,9 @@ export function Card({ description, title, date, id }: CardProps) {
         <h1>{title}</h1>
         <p>{formattedDate}</p>
       </TitleContainer>
-      <p>{formattedDescription}...</p>
+      <DescriptionContainer>
+        <ReactMarkdown>{`${formattedDescription}...`}</ReactMarkdown>
+      </DescriptionContainer>
     </CardContainer>
   )
 }

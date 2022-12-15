@@ -22,13 +22,13 @@ export const TitleContainer = styled.div`
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.5rem;
 
   h1 {
     font-size: 1.25rem;
     color: ${({ theme }) => theme['blue-100']};
     overflow-wrap: break-word;
-    max-width: 75%;
+    max-width: 70%;
   }
 
   p {
@@ -39,4 +39,9 @@ export const TitleContainer = styled.div`
       text-transform: uppercase;
     }
   }
+`
+
+export const DescriptionContainer = styled.div`
+  text-align: left;
+  font-size: 0.75rem;
 `
