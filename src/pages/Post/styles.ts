@@ -16,7 +16,12 @@ export const PostPrincipalCard = styled.div`
   background: ${({ theme }) => theme['blue-800']};
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
   gap: 2rem;
+  margin-bottom: 2.5rem;
+  h1 {
+    font-size: 1.5rem;
+  }
 `
 
 export const LinksContainer = styled.div`
@@ -24,4 +29,44 @@ export const LinksContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+`
+
+export const PostInformationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+`
+interface PostInformationContainerProps {
+  isFirstLetterIsUpperCase?: boolean
+}
+
+export const PostInformationContent = styled.div<PostInformationContainerProps>`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: ${({ theme }) => theme['blue-200']};
+
+  svg {
+    color: ${({ theme }) => theme['blue-600']};
+  }
+  p::first-letter {
+    text-transform: ${({ isFirstLetterIsUpperCase }) =>
+      isFirstLetterIsUpperCase && 'uppercase'};
+  }
+`
+
+export const PostContent = styled.main`
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+
+  h1,
+  h2 {
+    margin: 1rem 0;
+  }
+  p {
+    margin-left: 1rem;
+  }
+  li {
+    margin-left: 2rem;
+  }
 `

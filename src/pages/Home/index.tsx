@@ -40,6 +40,7 @@ interface CardData {
   title: string
   id: number
   description: string
+  number: number
   createdAt: Date
 }
 
@@ -53,6 +54,7 @@ interface GithubItems {
   id: number
   created_at: string
   body: string
+  number: number
 }
 
 interface GithubResponse {
@@ -101,8 +103,9 @@ export function Home() {
     const cardAux = items.map((item) => {
       return {
         title: item.title,
-        id: item.id,
+        id: Number(item.id),
         description: item.body,
+        number: Number(item.number),
         createdAt: new Date(item.created_at),
       }
     })
@@ -184,7 +187,7 @@ export function Home() {
                 date={card.createdAt}
                 description={card.description}
                 title={card.title}
-                id={card.id}
+                number={card.number}
               />
             )
           })}

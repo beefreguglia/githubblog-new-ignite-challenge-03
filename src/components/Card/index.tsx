@@ -8,10 +8,10 @@ interface CardProps {
   description: string
   title: string
   date: Date
-  id: number
+  number: number
 }
 
-export function Card({ description, title, date, id }: CardProps) {
+export function Card({ description, title, date, number }: CardProps) {
   const formattedDescription = description.split(' ', 25).join(' ')
   const formattedDate = formatDistanceToNow(date, {
     locale: ptBR,
@@ -20,7 +20,7 @@ export function Card({ description, title, date, id }: CardProps) {
   const navigate = useNavigate()
 
   return (
-    <CardContainer onClick={() => navigate(`/post/${id}`)}>
+    <CardContainer onClick={() => navigate(`/post/${number}`)}>
       <TitleContainer>
         <h1>{title}</h1>
         <p>{formattedDate}</p>
