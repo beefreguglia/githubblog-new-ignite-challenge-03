@@ -120,12 +120,10 @@ export function Home() {
   }, [])
 
   useEffect(() => {
-    if (queryValue) {
-      const delayWhenTyping = setTimeout(() => {
-        handleGetGithubIssue(queryValue)
-      }, 1000)
-      return () => clearTimeout(delayWhenTyping)
-    }
+    const delayWhenTyping = setTimeout(() => {
+      handleGetGithubIssue(queryValue)
+    }, 500)
+    return () => clearTimeout(delayWhenTyping)
   }, [queryValue])
 
   return (
@@ -186,6 +184,7 @@ export function Home() {
                 date={card.createdAt}
                 description={card.description}
                 title={card.title}
+                id={card.id}
               />
             )
           })}
